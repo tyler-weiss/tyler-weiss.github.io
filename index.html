@@ -13,12 +13,12 @@
     <canvas id="canvas" width="1000" height="500" style="background-color:black;"></canvas>
     
     <script>(function() {
-        var canvas = document.getElementById("canvas"),
+        let canvas = document.getElementById("canvas"),
           ctx = canvas.getContext("2d"),
           graphHeight = canvas.height,
           rateIncrease = 2 / canvas.width,
           iterateAtFertilityRateWithFormula = function(fertilityRate) {
-            var iterator = 0,
+            let iterator = 0,
                 numberOfCyclesToRun = 2000,
               population = .5,
               xCoordinate = canvas.width * ((fertilityRate - 2) / 2);
