@@ -1,42 +1,84 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
 
-  <title>Testing</title>
+    <title>Weiss on the Web</title>
+  </head>
 
-</head>
-
-<body>
+  <body>
+    <p>
+      <b>Tyler Weiss</b>
+      <br />
+      <img
+        src="https://tryhackme-badges.s3.amazonaws.com/UnderH1ll.png"
+        alt="TryHackMe"
+      />
+    </p>
+    <p>
+      Didn't know what to put here and I read Chaos: Making a New Science by
+      James Gleick a while back.
+    </p>
+    <p>
+      This covers the part in the book that stood out to me. A video by
+      Veritasium and below that a html canvas of a bifurcation diagram of the
+      logistic map for x → r x (1 – x) which took a lot of fiddling to display
+      correctly.
+    </p>
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/ovJcsL7vyrk?si=Ru9IXL0Az3iSjJCt"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
     <br />
-    <canvas id="canvas" width="1000" height="500" style="background-color:black;"></canvas>
-    
-    <script>(function() {
+    <canvas
+      id="canvas"
+      width="1000"
+      height="500"
+      style="background-color: black"
+    ></canvas>
+
+    <script>
+      (function () {
         let canvas = document.getElementById("canvas"),
           ctx = canvas.getContext("2d"),
           graphHeight = canvas.height,
           rateIncrease = 2 / canvas.width,
-          iterateAtFertilityRateWithFormula = function(fertilityRate) {
+          iterateAtFertilityRateWithFormula = function (fertilityRate) {
             let iterator = 0,
-                numberOfCyclesToRun = 2000,
-              population = .5,
+              numberOfCyclesToRun = 2000,
+              population = 0.5,
               xCoordinate = canvas.width * ((fertilityRate - 2) / 2);
             while (iterator++ < numberOfCyclesToRun) {
-                  // This is the logistic map for x → r x (1 – x), a feedback loop for population in our case
+              // This is the logistic map for x → r x (1 – x), a feedback loop for population in our case
               population = fertilityRate * population * (1 - population);
-              ctx.fillRect(xCoordinate, graphHeight - (population * graphHeight), 1, 1);
+              ctx.fillRect(
+                xCoordinate,
+                graphHeight - population * graphHeight,
+                1,
+                1,
+              );
             }
           };
         ctx.fillStyle = "rgba(34,167,240,0.1)";
-        for (fertilityRate = 0; fertilityRate < 4; fertilityRate += rateIncrease) {
-          (function(fertilityRate) {
-            setTimeout(function() {
+        for (
+          fertilityRate = 0;
+          fertilityRate < 4;
+          fertilityRate += rateIncrease
+        ) {
+          (function (fertilityRate) {
+            setTimeout(function () {
               iterateAtFertilityRateWithFormula(fertilityRate);
             }, 500);
           })(fertilityRate);
         }
       })();
-      </script>
-</body>
+    </script>
+  </body>
 </html>
