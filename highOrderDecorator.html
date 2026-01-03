@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JS higher-order function as decorator.</title>
+
+  <style>
+    
+  </style>
+
+  
+</head>
+<body>
+  <h3>Decoractor function. See jsfiddle console for output of Javascript panel.</h3>
+<pre>
+  <code>
+function loggerDecorator(passedFunc) {
+  console.log('Function inside decorator', passedFunc, 'args', arguments);
+  return function() {
+    console.log('passed function args', arguments);
+    const resp = passedFunc.call(this, ...arguments); // Unpack our args with spread operator
+    console.log('Logged at:', new Date().toLocaleString());
+    return resp;
+  };
+}
+  </code>
+</pre>
+
+  <script>
+    // function declaration instead of expression. https://www.freecodecamp.org/news/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0/ 
+function loggerDecorator(passedFunc) {
+  console.log('Function inside decorator', passedFunc, 'args', arguments);
+  return function() {
+    console.log('passed function args', arguments);
+    const resp = passedFunc.call(this, ...arguments); // Unpack our args with spread operator
+    console.log('Logged at:', new Date().toLocaleString());
+    return resp;
+  };
+}
+
+// Function to pass into the decorator
+const testFuncHobbitName = (name) => {
+  console.log('name arg passed in', name);
+  return {
+    player: `${name} Baggins`,
+    team: 'The Hobbits'
+  };
+};
+let decoratedLogger = loggerDecorator(testFuncHobbitName);
+
+const respData = decoratedLogger('Frodo');
+console.log('Value returned from inner function:\n', respData);
+
+const respData2 = decoratedLogger('Bilbo');
+console.log('Value returned from inner function:\n', respData2);
+
+/* USING WITH MULTI PARAM FUNCTION */
+
+// Function to pass into decorator
+const testFunc2ArgsFirstLastName = (firstName, lastName) => {
+  console.log('name arg passed in', name);
+  return {
+    player: `${firstName} ${lastName}`,
+    team: 'The Hobbits'
+  };
+};
+
+decoratedLogger = loggerDecorator(testFunc2ArgsFirstLastName);
+
+const respData3 = decoratedLogger('Samwise', 'Gamgee');
+console.log(respData3);
+
+  </script>
+</body>
+</html>

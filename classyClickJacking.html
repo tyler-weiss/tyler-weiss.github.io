@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classy Clickjacking Example (Security)</title>
+
+  <style>
+    iframe,
+.cover {
+  width: 1000px;
+  height: 1000px;
+  position: absolute;
+  top: 0;
+  left: -20px;
+  opacity: 0; /* in real opacity:0 */
+  z-index: 1;
+}
+.cover {
+  left: 0px;
+}
+iframe:hover {
+  opacity: 0.05;
+}
+.cover:hover {
+  opacity: 1;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <br /><br /><br /><br /><br />
+<div id="message">Click to get rich now:</div>
+<div class="cover">
+  <p>
+    Did you notice the youtube embed that was put above the button?<br />
+    What if it was profile settings for another site instead of this<br />
+    sweet sweet melody?
+  </p>
+
+  <iframe
+    id="iframeHide"
+    width="1000"
+    height="1000"
+    src="https://www.youtube.com/embed/GHMjD0Lp5DY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+<button>Click here!</button>
+
+
+  <script>
+    
+  </script>
+</body>
+</html>

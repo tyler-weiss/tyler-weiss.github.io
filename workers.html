@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workers make Javascript's Single Threaded into Multi-threaded</title>
+
+  <style>
+    body {
+  background-color: darkslategrey;
+  color: white;
+}
+.highlight, a {
+  color: rgb(1, 254, 34);
+  text-shadow: rgb(203, 254, 1) 0px 0px 5px;
+  padding: 1px 5px;
+}
+
+button {
+  margin: 5px;
+  padding: 4px;
+  background-color:cyan;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <script id="worker" type="javascript/worker">
+     	self.onmessage = async function(e) { // How to receive a message in a web worker
+
+  const url = "https://jsonplaceholder.typicode.com/posts";
+  let result = {};
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      result = await response.json();
+    } catch (error) {
+      console.error(error.message);
+    }
+
+      let sum = 0;
+      const testSent = e.data.testValue;
+      for (let i = 0; i < testSent; i++) sum += i;
+      postMessage({ 'doneNum': `The final sum is ${sum}* ${testSent}`, 'postResult': result });
+    }
+</script>
+<span class="highlight">
+  <p><b>Web Workers</b></p>
+
+  Javascript's main thread (in browser) can only directly manipulate the DOM.
+  <p>
+    However we can offload computation to multiple other threads through
+    Workers. These workers take a script source to go retrieve and do work with.
+    We can use Blob or Data URI Schema encoding to skip this network request it
+    just means our initial source loaded will include the needed code.
+  </p>
+  <p>
+    Basic usage: within a worker's code we can listen and post back with
+    mirroring method calls onMessage/postMessage from within and on the instance
+    of the worker on the main thread. Passing values between as shown below.
+  </p>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API"
+    >...more info on Web Workers</a
+  >
+</span>
+<span>
+  <p>Instructions:</p>
+  <p>
+    Click the change color button a few times.<br />Then try using it after
+    clicking the button that fires the blocking javascript code.<br />Finally
+    try changing the color after clicking the non-blocking.<br /><br />
+    <button id="bgButton">Change Background Color</button><br />
+    <button id="sumButton">Calculate Sum 10000000000 - Blocking</button><br />
+    <button id="webSumButton">Calculate Sum 10000000000 - Non-blocking with Worker</button>
+  </p></span
+>
+
+
+  <script>
+    const sumButton = document.querySelector("#sumButton");
+const webSumButton = document.querySelector("#webSumButton");
+const bgButton = document.querySelector("#bgButton");
+
+/* Web workers must exist in a seperate file or in seperate script tags as above
+ could also make use of the data uri scheme to encode 
+*/
+let blob = new Blob([document.getElementById("worker").textContent]);
+let worker = new Worker(window.URL.createObjectURL(blob));
+
+worker.onmessage = (e) => {
+  alert(e.data.doneNum);
+  console.log(e.data.postResult);
+};
+
+// // Event to fire postMessage to the web worker
+webSumButton.addEventListener("click", (event) => {
+  worker.postMessage({
+    // initiate a message to a web worker
+    testValue: 10000000000,
+  });
+});
+
+sumButton.addEventListener("click", async(event) => {
+  console.log("button was clicked");
+
+  const url = "https://jsonplaceholder.typicode.com/posts";
+  let result = {};
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    result = await response.json();
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  let sum = 0;
+  for (let i = 0; i < 10000000000; i++) {
+    sum += i;
+  }
+  alert(`The final sum is ${sum}*`);
+  console.log(result);
+});
+
+bgButton.addEventListener("click", (event) => {
+  if (document.body.style.background !== "black")
+    document.body.style.background = "black";
+  else document.body.style.background = "purple";
+});
+
+  </script>
+</body>
+</html>

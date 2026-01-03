@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON to UI Layout Example</title>
+
+  <style>
+    #main-container {
+  background-color: cornflowerblue;
+  padding: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 80%;
+  justify-content: space-evenly;
+  background: #2a7b9b;
+  background: linear-gradient(
+    90deg,
+    rgba(42, 123, 155, 1) 0%,
+    rgba(87, 199, 133, 1) 50%,
+    rgba(237, 221, 83, 1) 100%
+  );
+}
+
+.card {
+  flex: 0 0 200px;
+  margin: 10px;
+  border: 2px solid #ccc;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.9);
+  background-color: ivory;
+}
+
+.card {
+  flex: 0 0 200px;
+  border: 2px solid #66ff66;
+}
+
+.card.tiny {
+  flex: 0 0 100px;
+  border: 2px solid #66b3ff;
+}
+
+.card.small {
+  flex: 0 0 150px;
+  border: 2px solid red;
+}
+
+.card.big {
+  flex: 0 0 50%;
+  border: 2px solid purple;
+}
+
+.card img {
+  width: 100%;
+  max-height: 250px;
+}
+
+.card .text {
+  padding: 0 20px 20px;
+}
+
+.card .text > button {
+  background: gray;
+  border: 0;
+  color: white;
+  padding: 10px;
+  width: 100%;
+}
+.card .text > button a {
+  color: white;
+  text-decoration: none;
+}
+
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotating 2s linear infinite;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  cardType: "tiny|small|normal" default=normal <br />
+title: string, <br />
+specialAnimate: "rotating" default=none<br />
+description: string, <br />
+asset: string (url)<br />
+<div id="main-container"></div>
+
+
+  <script>
+    let testData = [
+  {
+    type: "hero",
+    rotationTimeSeconds: 5,
+    items: [
+      {
+        cardType: "big",
+        title: "Lumeno Big",
+        specialAnimate: "",
+        description: "Lumeno Big ",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/Lumeno.svg",
+      },
+      {
+        cardType: "small",
+        title: "Lumeno Small ",
+        specialAnimate: "",
+        description: "A little description",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/Lumeno.svg",
+      },
+      {
+        cardType: "tiny",
+        title: "Mahjong Tiny",
+        specialAnimate: "",
+        description: "Mahjong description",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/mahjongV2.svg",
+      },
+      {
+        cardType: "tiny",
+        title: "Bchamp Tiny animate",
+        specialAnimate: "rotating",
+        description: "Block Champ spin",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/block_champV2.svg",
+      },
+      {
+        cardType: "small",
+        title: "Scramble small",
+        specialAnimate: "",
+        description: "scramble word description",
+        asset:
+          "https://arenacloud.cdn.arkadiumhosted.com/arenaxstorage-blob/arenax-games/ScrambleWord/0.72/build/resources/assets/thumbs/thumb2x.jpg",
+      },
+      {
+        cardType: "tiny",
+        title: "Scramble tiny",
+        specialAnimate: "",
+        description: "scramble word description",
+        asset:
+          "https://arenacloud.cdn.arkadiumhosted.com/arenaxstorage-blob/arenax-games/ScrambleWord/0.72/build/resources/assets/thumbs/thumb2x.jpg",
+      },
+      {
+        cardType: "",
+        title: "Scramble normal",
+        specialAnimate: "",
+        description: "scramble word description",
+        asset:
+          "https://arenacloud.cdn.arkadiumhosted.com/arenaxstorage-blob/arenax-games/ScrambleWord/0.72/build/resources/assets/thumbs/thumb2x.jpg",
+      },
+    ],
+  },
+  {
+    type: "playYourWay",
+    rotationTimeSeconds: 5,
+    items: [
+      {
+        cardType: "tiny",
+        title: "Lumeno Tiny ",
+        specialAnimate: "",
+        description: "A little description here for game one",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/Lumeno.svg",
+      },
+      {
+        cardType: "small",
+        title: "Lumeno small",
+        specialAnimate: "",
+        description: "A little description here for game two",
+        asset:
+          "https://puzzles.usatoday.com/gcdn/sdgt-games-static-content/images/games/more_games/Lumeno.svg",
+      },
+    ],
+  },
+];
+
+testData.forEach((module) => {
+  let cards = module.items.map((item) => {
+    return `<article class="card ${item.cardType}">
+    <img src="${item.asset}" class="${item.specialAnimate}" >
+    <div class="text">
+      <h3>${item.title}</h3>
+      <p>${item.description}</p>
+      <button><a href="https://www.puzzles.usatoday.com">click here</a></button>
+    </div>
+  </article>`;
+  });
+
+  document.getElementById("main-container").innerHTML +=
+    `${module.type}<br /><div class="cards ${module.type}" > ${cards.join("")} </div> `;
+});
+
+  </script>
+</body>
+</html>

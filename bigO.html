@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSFiddle eys7dbqo</title>
+
+  <style>
+    pre {
+  background-color: #cce6ff;
+}
+  </style>
+
+  
+</head>
+<body>
+  <h2>
+  What to know about Big O
+</h2>
+<p>
+  <i>“Big O notation is used to classify algorithms by how they respond to changes in input size, such as how the processing time of an algorithm changes as the problem size becomes extremely large.” </i> – Wikipedia </p>
+<p> While writing out algorithms in code, a programmer must be aware of their drain on the performance that may be passed onto the user experience&nbsp;or aware of the potential&nbsp;drain of CPU usage.</p>
+<p>
+  <img src="https://tylerweiss.files.wordpress.com/2016/04/bigo.png" width='50%' /> <br />
+  For all examples below let us assume elementList = [1,2,3,4,…,100]
+
+</p>
+<p><strong><span style="color:#ff0000;">Constant Time – O(1):</span></strong></p>
+<p>Increasing the problem size does not change the number of operations.</p>
+<p>Examples:</p>
+<ul>
+  <li>Pulling from the top of a stack or from the front of an array. No matter how large the stack or array is, the steps to complete the operations is one.</li>
+  <li>Looking up a value on an object when the key is known.</li>
+</ul>
+A code example:
+<pre>function firstOfList(elementList) {
+ return elementList[0];
+}</pre>
+<p><strong><span style="color:#3366ff;">Linear Time O(<em>n</em>):
+    </span></strong></p>
+<p>The number of operations is proportional to problem size.&nbsp;The larger the list the longer the operation will take to complete by that <code>n</code> number.</p>
+<p>Examples:</p>
+<ul>
+  <li>Finding a single item in an unsorted array</li>
+  <li>Searching for a single value in a linked list</li>
+  <li>ForEach</li>
+  <li>Slice and indexOf is linear in Javascript</li>
+</ul>
+A code example:
+<pre>function isInList(lookFor, elementList) {
+  for (element in elementList) {
+    if (element == lookFor) {
+      return true;
+    }
+  }
+  return false;
+}
+</pre>
+<p><strong><span>Logarithmic Time – O(log <sub>c</sub>&nbsp;<em>n</em>)</span></strong></p>
+<p>Multiplying the problem size by constant adds the same number operations. How many times do I have to divide <em>n</em> by <sub>c</sub> to get to 1?</p>
+<p>Examples:</p>
+<ul>
+  <li>Dividing is almost always log.</li>
+  <li>Finding an item in a sorted array using a <strong>binary search tree</strong>.</li>
+  <li>Finding a name in the phone book, open up half the book then determine if you have to check the first half or the second, then go to halfway between that half of the book, repeat.</li>
+</ul>
+<p><strong><span style="color:#008000;">Quadratic Time – O(<em>n*n</em> or <em>n<sup>2</sup></em>)</span></strong></p>
+<p>The number of operations is proportional to the square of the problem size.</p>
+<p>Examples:</p>
+<ul>
+  <li>Two nested for loops, usually</li>
+  <li>Any operation that multiplies two numbers by each other</li>
+  <li>Comparing two items as in a bubble sort or quick sort</li>
+</ul>
+A code example:
+<pre>function sumCombinations (elementList) {
+  sumList = [];
+  for (element in elementList) {
+    for (thing in elementList) {
+      sumList.append(element+thing)
+    }
+  }
+  return sumList;
+}
+</pre>
+<p><strong>Exponential Time – (O<sub>c</sub><sup>n</sup>)</strong></p>
+<p>The number of operations is proportional to some constant raised to the power of problem size.&nbsp;Any operation that would double the number of inputs. If the number of input grows, the time to complete the operation grows exponentially.</p>
+<p>&nbsp;</p>
+<p><strong>Determining Complexity</strong></p>
+<ol>
+  <li>Determine what variable(s) represent problem size (this is <em>n</em>)</li>
+  <li>Write the number of operations in terms of <em>n</em>
+    <ol>
+      <li>lines of code in series are <strong>added</strong></li>
+      <li>lines of code nested in other function calls or loops are <strong>multiplied</strong></li>
+    </ol>
+  </li>
+  <li>Find leading term and drop coefficients (instead of 5<em>n</em>*<em>n</em>, then it’s <em>n</em>*<em>n</em>)</li>
+  <li>If adding operations, choose the worst case (linear trumps constant, linear trumps log<sup>n</sup>, etc) and this is the overall time complexity.</li>
+  <li>If multiplying, the time complexity is the product of both (<em>n*</em>log<em>n =&nbsp;</em><em>n</em>log<em>n</em>)</li>
+</ol>
+
+
+  <script>
+    
+  </script>
+</body>
+</html>

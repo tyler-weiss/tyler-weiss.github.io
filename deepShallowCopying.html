@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep/Shallow Copy JS examples.</title>
+
+  <style>
+    body {
+    background-color: black;
+    color: white;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <h3> Check in jsfiddle console.</h3>
+<p>Using JS spread operator of one object into another.</p>
+<p>Note the double nested property and how that is treated here.</p>
+<pre>
+  <code>
+let test1 = {
+  prop1: 'original thing',
+  prop2: {
+    nestedProp1: " inner value",
+    nestedProp2: {
+      doubleNestedProp1: "inner inner value"
+    }
+  }
+};
+
+let test2 = {
+  ...test1
+};
+  </code>
+</pre>
+
+  <script>
+    let test1 = {
+  prop1: 'original thing',
+  prop2: {
+    nestedProp1: " inner value",
+    nestedProp2: {
+      doubleNestedProp1: "inner inner value"
+    }
+  }
+};
+
+let test2 = {
+  ...test1
+};
+
+/*  Seemingly the same, yet the objects are not equal when I use === or ==.
+	The difference between primitive and non-primitive data types is that:
+primitive data types are compared by value.
+non-primitive data types are compared by reference.
+We could set test2 = test1 and they would reference the same point and therefore be equal and also changes would be synced.
+*/
+console.log({
+  prop1: 'original thing',
+  prop2: {
+    nestedProp1: " inner value",
+    nestedProp2: {
+      doubleNestedProp1: "inner inner value"
+    }
+  }
+} == test1);
+console.log(test1 == test2);
+console.log(test1 === test2);
+
+/*
+	We are able to Deep Copy a normal object using the spread operator and Object.assign(), but not able to Deep Copy a nested object within. It treats this prop as a shallow copy (referencing the original object) therefore a change there is reflected on the original object. You can see this when we log that prop2 is different.
+*/
+console.log(test1, test2);
+
+// make a first level prop change and then some nested changes.
+
+test2.prop1 = "CHANGE PROP1";
+test2.prop2.nestedProp1 = 'CHANGE INNER VALUE';
+test2.prop2.nestedProp2.doubleNestedProp1 = 'CHANGED INNER INNER VALUE';
+
+// So now let's compare those .
+
+console.log(JSON.parse(JSON.stringify(test1)), JSON.parse(JSON.stringify(test2)));
+console.log(test1.prop2.nestedProp2.doubleNestedProp1, test2.prop2.nestedProp2.doubleNestedProp1);
+
+// We can accomplish a Deep Copy with nested objects by setting a variable using JSON's stringify() and then parse() on the initial object.
+
+let beep = {
+  prop1: 'original thing',
+  prop2: {
+    nestedProp1: " inner value",
+    nestedProp2: {
+      doubleNestedProp1: "inner inner value"
+    }
+  }
+};
+let beep2 = beep;
+console.log(beep==beep2); // true 
+let beep3 = JSON.parse(JSON.stringify(beep));
+console.log(beep==beep3); // false 
+
+  </script>
+</body>
+</html>
