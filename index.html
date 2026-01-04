@@ -44,18 +44,18 @@
         border-radius: 5px;
         padding: 1px 5px;
       }
-    #console {
-      height: 205px;
-      width: 50%;
-      margin: auto;
-    }
+      #console {
+        height: 205px;
+        width: 50%;
+        margin: auto;
+      }
     </style>
   </head>
 
   <body>
     <pre id="console"></pre>
     <div class="center">
-       <h3>TryHackMe Account ↓</h3>       
+      <h3>TryHackMe Account ↓</h3>
       <br />
       <br />
       <iframe
@@ -76,13 +76,14 @@
             >Data URI Scheme for rendering assets</a
           >
         </li>
+
+        <li><a href="./chaos.html">Chaotic constant</a></li>
         <li><a href="./neon.html">Neon console style</a></li>
         <li><a href="./classyClickJacking.html">Clickjacking example</a></li>
         <li><a href="./workers.html">Javascript workers example</a></li>
-        <li><a href="./uiLayout.html">UI layout</a></li>
-                <li><a href="./chaos.html">Chaotic constant</a></li>
+        <li><a href="./uiLayout.html">Layout config control via JSON</a></li>
         <li><a href="./socketPortScan.html">Web socket port scan</a></li>
-        
+
         <li>
           <a href="./deepShallowCopying.html"
             >JS spread operator behavior, deep and shallow copying</a
@@ -96,14 +97,13 @@
             >High order function decorator JS example</a
           >
         </li>
-        <li><a href="./uiLayout.html">Layout config control via JSON</a></li>
         <li><a href="./bigO.html">Big O basic idea</a></li>
       </ul>
     </div>
   </body>
   <fooer>
     <script>
-    let txt = `
+      let txt = `
 888       888          d8b                        888    d8P          d8b                   d8b                   
 888   o   888          Y8P                        888   d8P           Y8P                   Y8P                   
 888  d8b  888                                     888  d8P                                                        
@@ -115,7 +115,8 @@
                                                                                    888                            
                                                                                    888                            
                                                                                    888
-`;      let i = 0;
+`;
+      let i = 0;
       function type() {
         if (i < txt.length) {
           document.getElementById("console").innerText += txt.charAt(i);

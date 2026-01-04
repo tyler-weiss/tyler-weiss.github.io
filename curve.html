@@ -1,52 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Bézier Curves</title>
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bézier Curves</title>
+      <style></style>
+    </head>
+    <body>
+      <p>
+        <a href="https://www.youtube.com/watch?v=aVwxzDHniEw"
+          ><b> The Beauty of Bézier Curves</b> by Freya Holmér </a
+        ><br />
+        <a href="https://javascript.info/bezier-curve#maths"
+          ><b>Bezier Curve</b></a
+        ><br />
+        Javascript already has functions
+        <b style="color: red">quadraticCurveTo</b> (& bezierCurveTo) but we can
+        <b style="color: rgba(34, 167, 240, 0.9)">write our own</b> to
+        understand just how they can be generated.<br />
+      </p>
 
-  <style>
-    
-  </style>
-
-  
-</head>
-<body>
-  <p>
-  <a href="https://www.youtube.com/watch?v=aVwxzDHniEw"><b> The Beauty of Bézier Curves</b> by Freya Holmér
-</a
-  ><br />
-  <a href="https://javascript.info/bezier-curve#maths"><b>Bezier Curve</b></a
-  ><br />
-  Javascript already has functions <b style="color:red;">quadraticCurveTo</b> (& bezierCurveTo) but
-  we can <b style="color:rgba(34,167,240,0.9);">write our own</b> to understand just how they can be generated.<br />
-
-</p>
-
-<canvas
-  id="canvas"
-  width="400"
-  height="355"
-  style="background-color: black"
-></canvas>
-<iframe
-  class="code-result__iframe"
-  data-trusted="1"
-  style="width: 350px; height: 370px"
-  src="https://en.js.cx/article/bezier-curve/demo.svg?p=0,0,0.5,1,1,0&amp;animate=1"
-></iframe><p>
-    Remember on our canvas (x,y) = (0,0) starts at the top left (inverted). The value of <b>t</b> is a percentage from one point to another. If we use this percentage on each line to create a point and then make a line from them and also plot t(x,y)on that line we'll draw the curve as t approaches 1.
-</p>
-<br />
-<!-- 
-https://www.youtube.com/watch?v=aVwxzDHniEw 
- -->
-
-
-  <script>
-    let canvas = document.getElementById("canvas")
+      <canvas
+        id="canvas"
+        width="400"
+        height="355"
+        style="background-color: black"
+      ></canvas>
+      <iframe
+        class="code-result__iframe"
+        data-trusted="1"
+        style="width: 350px; height: 370px"
+        src="https://en.js.cx/article/bezier-curve/demo.svg?p=0,0,0.5,1,1,0&amp;animate=1"
+      ></iframe>
+      <p>
+        Remember on our canvas (x,y) = (0,0) starts at the top left (inverted).
+        The value of <b>t</b> is a percentage from one point to another. If we
+        use this percentage on each line to create a point and then make a line
+        from them and also plot t(x,y)on that line we'll draw the curve as t
+        approaches 1.
+      </p>
+      <pre>
+let canvas = document.getElementById("canvas")
 let ctx = canvas.getContext("2d")
 ctx.lineWidth = 5
 ctx.fillStyle = "rgba(34,167,240,0.9)"
@@ -90,6 +86,58 @@ ctx.moveTo(18, 25)
 ctx.quadraticCurveTo(35, 345, 160, 19)
 ctx.stroke()
 
-  </script>
-</body>
+</pre
+      >
+      <br />
+      <!-- 
+https://www.youtube.com/watch?v=aVwxzDHniEw 
+ -->
+
+      <script>
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        ctx.lineWidth = 5;
+        ctx.fillStyle = "rgba(34,167,240,0.9)";
+
+        let delay = 15;
+        let p1 = [10, 20];
+        let p2 = [30, 350];
+        let p3 = [166, 20];
+        let t = 0.0; // basically we want to go from 0 -> 1 and plug those in.
+        let increment = 0.01;
+
+        // P = (1−t)^2 * P1 + 2(1−t)t * P2 + t^2 * P3
+        // wrapped in Math.floor for whole numbers on our graph.
+        let calcThreePointformula = () => {
+          let outputx = Math.floor(
+            (1 - t) ** 2 * p1[0] + 2 * (1 - t) * t * p2[0] + t ** 2 * p3[0],
+          );
+          let outputy = Math.floor(
+            (1 - t) ** 2 * p1[1] + 2 * (1 - t) * t * p2[1] + t ** 2 * p3[1],
+          );
+          t += increment;
+          return [outputx, outputy];
+        };
+
+        let mainLoop = () => {
+          //  ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (t <= 1 + increment) {
+            tp = calcThreePointformula();
+            console.log(`f(${t})= (x,y) `, tp);
+            ctx.fillRect(tp[0], tp[1], 5, 5);
+            setTimeout(mainLoop, delay);
+          }
+        };
+
+        mainLoop();
+
+        // Using a built in Javascript function for a similar function
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(18, 25);
+        ctx.quadraticCurveTo(35, 345, 160, 19);
+        ctx.stroke();
+      </script>
+    </body>
+  </html>
 </html>

@@ -1,25 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Conway's Game Of Life</title>
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Conway's Game Of Life</title>
-
-  <style>
-    body {
-    background-color:black;
-}
-  </style>
-
-  
-</head>
-<body>
-  <canvas id="gameBoard" width="400" height="400" style="border:1px solid white; background-color: black;"></canvas>
-
-  <script>
-    /**
+      <style>
+        body {
+          background-color: black;
+          color: white;
+        }
+      </style>
+    </head>
+    <body>
+      <canvas
+        id="gameBoard"
+        width="400"
+        height="400"
+        style="border: 1px solid white; background-color: black"
+      ></canvas>
+      <pre>
+/**
  * Conway's Game of Life
  * Any live cell with two or three live neighbours survives.
  * Any dead cell with three live neighbours becomes a live cell.
@@ -143,6 +145,138 @@ console.log("The time delay is set to " + delay)
 // start off the loop
 mainAnimationLoop();
 
-  </script>
-</body>
+</pre
+      >
+      <script>
+        /**
+         * Conway's Game of Life
+         * Any live cell with two or three live neighbours survives.
+         * Any dead cell with three live neighbours becomes a live cell.
+         * All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+         */
+
+        let matrixHeight = 200;
+        let matrixWidth = 200;
+        let initalPadding = 0;
+
+        let delay = 50; // time delay in milliseconds,
+
+        var shownMatrix = createMatrix(matrixWidth, matrixHeight);
+        var theUpsideDown = createMatrix(matrixWidth, matrixHeight);
+
+        var canvas = document.getElementById("gameBoard");
+        var gameBoard = canvas.getContext("2d");
+        gameBoard.scale(2, 2); // Scaling up the pixels in the gameBoard so we can actually see what is taking place
+        gameBoard.fillStyle = "#CCFF33";
+
+        function mainAnimationLoop() {
+          //main loop
+          drawGrid();
+          updateMatrix();
+          setTimeout(mainAnimationLoop, delay);
+        }
+
+        function createMatrix(width, height) {
+          var matrix = [];
+          for (let row = 0; row < height; row++) {
+            matrix[row] = [];
+            for (let column = 0; column < width; column++) {
+              matrix[row][column] = 0;
+            }
+          }
+          //console.table(matrix);
+          return matrix;
+        }
+
+        function randomFillShownMatrix(width, height, padding = 2) {
+          for (var row = padding; row < height - padding; row++) {
+            for (var column = padding; column < width - padding; column++) {
+              shownMatrix[row][column] = Math.round(Math.random());
+            }
+          }
+        }
+
+        function drawGrid() {
+          //draw the contents of the shownMatrix onto a gameBoard
+          /* console.table(shownMatrix); */
+          gameBoard.clearRect(0, 0, matrixHeight, matrixWidth); // clear the gameBoard
+          for (var row = 1; row < matrixHeight; row++) {
+            for (var column = 1; column < matrixWidth; column++) {
+              if (shownMatrix[row][column] === 1) {
+                gameBoard.fillRect(row, column, 1, 1);
+              }
+            }
+          }
+        }
+
+        function updateMatrix() {
+          //perform one iteration of grid update
+
+          for (var row = 1; row < matrixHeight - 1; row++) {
+            //iterate through rows
+            for (var column = 1; column < matrixWidth - 1; column++) {
+              //iterate through columns
+              var liveNeighbors = 0;
+              // check the surroundings tally up live neighbors
+              liveNeighbors += shownMatrix[row - 1][column - 1]; // top left 0 or 1
+              liveNeighbors += shownMatrix[row - 1][column]; // top center 0 or 1
+              liveNeighbors += shownMatrix[row - 1][column + 1]; // top right 0 or 1
+
+              liveNeighbors += shownMatrix[row][column - 1]; // middle left 0 or 1
+              liveNeighbors += shownMatrix[row][column + 1]; // middle right 0 or 1
+
+              liveNeighbors += shownMatrix[row + 1][column - 1]; // bottom left 0 or 1
+              liveNeighbors += shownMatrix[row + 1][column]; // bottom center 0 or 1
+              liveNeighbors += shownMatrix[row + 1][column + 1]; // bottom right 0 or 1
+
+              /**
+               * Conway's Game of Life
+               * Any live cell with two or three live neighbours survives.
+               * Any dead cell with three live neighbours becomes a live cell.
+               * All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+               */
+              switch (liveNeighbors) {
+                case 2:
+                  theUpsideDown[row][column] = shownMatrix[row][column]; // Bee Gees stayin alive
+
+                  break;
+                case 3:
+                  theUpsideDown[row][column] = 1; // Bee Gees stayin alive
+
+                  break;
+                default:
+                  theUpsideDown[row][column] = 0; // Sorry, dead!
+              }
+            }
+          }
+
+          for (var row = 1; row < matrixHeight - 1; row++) {
+            // Loop through rows
+            //top and bottom
+            theUpsideDown[row][0] = theUpsideDown[row][matrixHeight - 1];
+            theUpsideDown[row][matrixHeight - 1] = theUpsideDown[row][1];
+            //left and right
+            theUpsideDown[0][row] = theUpsideDown[matrixHeight - 1][row];
+            theUpsideDown[matrixHeight - 1][row] = theUpsideDown[1][row];
+          }
+
+          // Swap matrices
+          var temp = shownMatrix;
+          shownMatrix = theUpsideDown;
+          theUpsideDown = temp;
+        }
+
+        // randomly set some initial cells to fill, default 2 row/column padding
+        randomFillShownMatrix(
+          matrixWidth,
+          matrixHeight,
+          (padding = initalPadding),
+        );
+
+        console.log("The time delay is set to " + delay);
+        // start off the loop
+        mainAnimationLoop();
+      </script>
+    </body>
+  </html>
 </html>

